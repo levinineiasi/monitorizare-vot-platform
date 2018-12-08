@@ -29,3 +29,19 @@ resource "azurerm_sql_server" "voting_irregularities_sql_server" {
   administrator_login          = "${var.sql_sa_login}"
   administrator_login_password = "${var.sql_sa_password}"
 }
+
+resource "azurerm_app_service_plan" "voting_irregularities_api_app_service_plan" {
+  name                = "${var.root_name}-api-sp"
+  location            = "${azurerm_resource_group.voting_irregularities_rg.location}"
+  resource_group_name = "${azurerm_resource_group.voting_irregularities_rg.name}"
+  kind                = "Linux"
+
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+
+  properties {
+    reserved = true
+  }
+}
